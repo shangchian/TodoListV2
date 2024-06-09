@@ -133,8 +133,7 @@ class HomeViewModel extends BaseViewModel {
                 onPressed: () {
                   _writeData();
 
-                  globalViewModel.updateTotalTask();
-                  globalViewModel.setShowTask(globalViewModel.totalTasks);
+
                   // print('Entered text: ${_textFieldController.text}');
                   // print('Selected date: ${DateFormat('yyyy-MM-dd').format(_selectedDate)}');
                   AutoRouter.of(context).pop();
@@ -154,7 +153,7 @@ class HomeViewModel extends BaseViewModel {
         'title': titleTextEditingController.text,
         'description': descriptionTextEditingController.text
       }).then((_) {
-        print('Data written successfully');
+        print('Data written successfully'); 
       }).catchError((error) {
         print('Failed to write data: $error');
       });
@@ -170,5 +169,57 @@ class HomeViewModel extends BaseViewModel {
       final data = event.snapshot.value;
       print('Data updated: $data');
     });
+  }
+
+  void deleteTask(BuildContext context, String id) async{
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(S.current.deleteTaskDialogTitle),
+          content: Text(S.current.deleteTaskDialogDescription),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                AutoRouter.of(context).pop();
+              },
+              child: Text(S.current.no),
+            ),
+            TextButton(
+              onPressed: () {
+
+                _deleteData(id);
+
+                AutoRouter.of(context).pop();
+              },
+              child: Text(S.current.yes),
+            ),
+          ],
+        );
+      },
+    );
+    // try {
+    //   _databaseReference.child(globalViewModel.user!.id).child('tasks').child(id).remove().then((_) {
+    //     print('Successfully deleted $id');
+    //   }).catchError((error) {
+    //     print('Failed to delete $id: $error');
+    //   });
+    // } catch (error) {
+    //   print('Failed to retrieve data: $error');
+    // }
+  }
+
+  void _deleteData(String id) {
+    try {
+      _databaseReference.child(globalViewModel.user!.id).child('tasks').child(id).remove().then((_) {
+        print('Successfully deleted $id');
+        globalViewModel.updateTotalTask();
+        globalViewModel.setShowTask(globalViewModel.totalTasks);
+      }).catchError((error) {
+        print('Failed to delete $id: $error');
+      });
+    } catch (error) {
+      print('Failed to retrieve data: $error');
+    }
   }
 }

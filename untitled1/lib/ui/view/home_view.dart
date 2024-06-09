@@ -53,6 +53,9 @@ class HomeView extends StatelessWidget {
                           child: ListTile(
                             title: Text(model.globalViewModel.showTasks.value[index].title,),
                             subtitle: Text(model.globalViewModel.showTasks.value[index].description),
+                            onLongPress: () {
+                              model.deleteTask(context, model.globalViewModel.showTasks.value[index].id);
+                            },
                           ),
                         );
                       },

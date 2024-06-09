@@ -25,13 +25,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("新增"),
         "addTask": MessageLookupByLibrary.simpleMessage("新增任務"),
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
+        "deleteTaskDialogDescription":
+            MessageLookupByLibrary.simpleMessage("是否刪除任務"),
+        "deleteTaskDialogTitle": MessageLookupByLibrary.simpleMessage("刪除任務"),
         "description": MessageLookupByLibrary.simpleMessage("描述"),
         "dueDay": MessageLookupByLibrary.simpleMessage("截止日期"),
         "finish": MessageLookupByLibrary.simpleMessage("完成"),
         "google_login": MessageLookupByLibrary.simpleMessage("使用 Google 登入"),
         "logout": MessageLookupByLibrary.simpleMessage("登出"),
+        "no": MessageLookupByLibrary.simpleMessage("否"),
         "priority": MessageLookupByLibrary.simpleMessage("優先權"),
         "title": MessageLookupByLibrary.simpleMessage("標題"),
-        "todo_list": MessageLookupByLibrary.simpleMessage("待辦事項")
+        "todo_list": MessageLookupByLibrary.simpleMessage("待辦事項"),
+        "yes": MessageLookupByLibrary.simpleMessage("是")
       };
 }

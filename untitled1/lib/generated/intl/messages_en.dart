@@ -25,14 +25,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addTask": MessageLookupByLibrary.simpleMessage("Add Task"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "deleteTaskDialogDescription":
+            MessageLookupByLibrary.simpleMessage("Whether to delete the task?"),
+        "deleteTaskDialogTitle":
+            MessageLookupByLibrary.simpleMessage("Delete Task"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "dueDay": MessageLookupByLibrary.simpleMessage("Due Day"),
         "finish": MessageLookupByLibrary.simpleMessage("Finish"),
         "google_login":
             MessageLookupByLibrary.simpleMessage("Login With Google"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+        "no": MessageLookupByLibrary.simpleMessage("No"),
         "priority": MessageLookupByLibrary.simpleMessage("Priority"),
         "title": MessageLookupByLibrary.simpleMessage("Title"),
-        "todo_list": MessageLookupByLibrary.simpleMessage("Todo List")
+        "todo_list": MessageLookupByLibrary.simpleMessage("Todo List"),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };
 }

@@ -10,5 +10,9 @@
   "cancel": "Cancel",
   "finish": "Finish",
   "priority": "Priority",
-  "dueDay": "Due Day"
+  "dueDay": "Due Day",
+  "deleteTaskDialogTitle": "Delete Task",
+  "deleteTaskDialogDescription": "Whether to delete the task?",
+  "yes": "Yes",
+  "no": "No"
 }

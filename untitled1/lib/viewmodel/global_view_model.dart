@@ -27,7 +27,7 @@ class GlobalViewModel extends ChangeNotifier {
       if (snapshot.exists) {
         Map<dynamic, dynamic> users = snapshot.value as Map<dynamic, dynamic>;
         users.forEach((key, value) {
-          tasks.add(Task(title: value['title'], description: value['description']));
+          tasks.add(Task(id: key, title: value['title'], description: value['description']));
         });
         setTotalTask(tasks);
         setShowTask(tasks);

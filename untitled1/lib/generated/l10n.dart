@@ -159,6 +159,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Delete Task`
+  String get deleteTaskDialogTitle {
+    return Intl.message(
+      'Delete Task',
+      name: 'deleteTaskDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Whether to delete the task?`
+  String get deleteTaskDialogDescription {
+    return Intl.message(
+      'Whether to delete the task?',
+      name: 'deleteTaskDialogDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
