@@ -24,25 +24,46 @@ class HomeView extends StatelessWidget {
               ],
             ),
             actions: [
+              // 登出
               TextButton(
                 onPressed: () {
                   model.logout(context);
                 },
                 child: Text(
-                  'Logout',
+                  S.current.logout,
                   style: TextStyle(color: Colors.blue),
                 ),
               ),
             ],
           ),
-          body: Container(
-            alignment: Alignment.bottomRight,
-            margin: EdgeInsets.all(30),
-            child: FloatingActionButton.extended(
-              onPressed: () {},
-              label: Text('Add'),
-              icon: Icon(Icons.add),
-            ),
+          body: Stack(
+            children: [
+              ValueListenableBuilder(
+                  valueListenable: model.globalViewModel.showTasks,
+                  builder: (context, value, child) {
+                    return ListView.builder(
+                      itemCount: model.globalViewModel.showTasks.value.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(model.globalViewModel.showTasks.value[index].title,),
+                          subtitle: Text(model.globalViewModel.showTasks.value[index].description),
+                        );
+                      },
+                    );
+                  },
+              ),
+              Container(
+                alignment: Alignment.bottomRight,
+                margin: EdgeInsets.all(30),
+                child: FloatingActionButton.extended(
+                  onPressed: () {
+                    model.addTask(context);
+                  },
+                  label: Text(S.current.add),
+                  icon: Icon(Icons.add),
+                ),
+              )
+            ],
           ),
         );
       },

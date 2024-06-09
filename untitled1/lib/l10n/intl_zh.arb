@@ -1,5 +1,14 @@
 {
   "@@locale": "zh",
   "todo_list": "待辦事項",
-  "google_login": "使用 Google 登入"
+  "google_login": "使用 Google 登入",
+  "logout": "登出",
+  "add": "新增",
+  "addTask": "新增任務",
+  "title": "標題",
+  "description": "描述",
+  "cancel": "取消",
+  "finish": "完成",
+  "priority": "優先權",
+  "dueDay": "截止日期"
 }

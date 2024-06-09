@@ -22,7 +22,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "add": MessageLookupByLibrary.simpleMessage("新增"),
+        "addTask": MessageLookupByLibrary.simpleMessage("新增任務"),
+        "cancel": MessageLookupByLibrary.simpleMessage("取消"),
+        "description": MessageLookupByLibrary.simpleMessage("描述"),
+        "dueDay": MessageLookupByLibrary.simpleMessage("截止日期"),
+        "finish": MessageLookupByLibrary.simpleMessage("完成"),
         "google_login": MessageLookupByLibrary.simpleMessage("使用 Google 登入"),
+        "logout": MessageLookupByLibrary.simpleMessage("登出"),
+        "priority": MessageLookupByLibrary.simpleMessage("優先權"),
+        "title": MessageLookupByLibrary.simpleMessage("標題"),
         "todo_list": MessageLookupByLibrary.simpleMessage("待辦事項")
       };
 }

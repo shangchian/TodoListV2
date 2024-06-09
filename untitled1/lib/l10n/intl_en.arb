@@ -1,5 +1,14 @@
 {
   "@@locale": "en",
   "todo_list": "Todo List",
-  "google_login": "Login With Google"
+  "google_login": "Login With Google",
+  "logout": "Logout",
+  "add": "Add",
+  "addTask": "Add Task",
+  "title": "Title",
+  "description": "Description",
+  "cancel": "Cancel",
+  "finish": "Finish",
+  "priority": "Priority",
+  "dueDay": "Due Day"
 }
