@@ -44,9 +44,16 @@ class HomeView extends StatelessWidget {
                     return ListView.builder(
                       itemCount: model.globalViewModel.showTasks.value.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(model.globalViewModel.showTasks.value[index].title,),
-                          subtitle: Text(model.globalViewModel.showTasks.value[index].description),
+                        return Container(
+                          margin: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                          decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.circular(12), // 设置圆角
+                          ),
+                          child: ListTile(
+                            title: Text(model.globalViewModel.showTasks.value[index].title,),
+                            subtitle: Text(model.globalViewModel.showTasks.value[index].description),
+                          ),
                         );
                       },
                     );
