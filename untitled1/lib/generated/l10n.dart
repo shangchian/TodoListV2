@@ -91,10 +91,10 @@ class S {
   }
 
   /// `Add Task`
-  String get addTask {
+  String get add_task {
     return Intl.message(
       'Add Task',
-      name: 'addTask',
+      name: 'add_task',
       desc: '',
       args: [],
     );
@@ -151,30 +151,30 @@ class S {
   }
 
   /// `Due Day`
-  String get dueDay {
+  String get due_day {
     return Intl.message(
       'Due Day',
-      name: 'dueDay',
+      name: 'due_day',
       desc: '',
       args: [],
     );
   }
 
   /// `Delete Task`
-  String get deleteTaskDialogTitle {
+  String get delete_task_dialog_title {
     return Intl.message(
       'Delete Task',
-      name: 'deleteTaskDialogTitle',
+      name: 'delete_task_dialog_title',
       desc: '',
       args: [],
     );
   }
 
   /// `Whether to delete the task?`
-  String get deleteTaskDialogDescription {
+  String get delete_task_dialog_description {
     return Intl.message(
       'Whether to delete the task?',
-      name: 'deleteTaskDialogDescription',
+      name: 'delete_task_dialog_description',
       desc: '',
       args: [],
     );
@@ -195,6 +195,126 @@ class S {
     return Intl.message(
       'No',
       name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Low`
+  String get priority_low {
+    return Intl.message(
+      'Low',
+      name: 'priority_low',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Medium`
+  String get priority_med {
+    return Intl.message(
+      'Medium',
+      name: 'priority_med',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `High`
+  String get priority_high {
+    return Intl.message(
+      'High',
+      name: 'priority_high',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not Started`
+  String get progress_not_started {
+    return Intl.message(
+      'Not Started',
+      name: 'progress_not_started',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In Progress`
+  String get progress_in_progress {
+    return Intl.message(
+      'In Progress',
+      name: 'progress_in_progress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Completed`
+  String get progress_completed {
+    return Intl.message(
+      'Completed',
+      name: 'progress_completed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Progress`
+  String get progress {
+    return Intl.message(
+      'Progress',
+      name: 'progress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sort`
+  String get sort {
+    return Intl.message(
+      'Sort',
+      name: 'sort',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sort Task`
+  String get sort_task {
+    return Intl.message(
+      'Sort Task',
+      name: 'sort_task',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ok`
+  String get ok {
+    return Intl.message(
+      'Ok',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tags`
+  String get tag {
+    return Intl.message(
+      'Tags',
+      name: 'tag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search`
+  String get search {
+    return Intl.message(
+      'Search',
+      name: 'search',
       desc: '',
       args: [],
     );

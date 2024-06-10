@@ -23,18 +23,31 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("新增"),
-        "addTask": MessageLookupByLibrary.simpleMessage("新增任務"),
+        "add_task": MessageLookupByLibrary.simpleMessage("新增任務"),
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
-        "deleteTaskDialogDescription":
+        "delete_task_dialog_description":
             MessageLookupByLibrary.simpleMessage("是否刪除任務"),
-        "deleteTaskDialogTitle": MessageLookupByLibrary.simpleMessage("刪除任務"),
+        "delete_task_dialog_title":
+            MessageLookupByLibrary.simpleMessage("刪除任務"),
         "description": MessageLookupByLibrary.simpleMessage("描述"),
-        "dueDay": MessageLookupByLibrary.simpleMessage("截止日期"),
+        "due_day": MessageLookupByLibrary.simpleMessage("截止日期"),
         "finish": MessageLookupByLibrary.simpleMessage("完成"),
         "google_login": MessageLookupByLibrary.simpleMessage("使用 Google 登入"),
         "logout": MessageLookupByLibrary.simpleMessage("登出"),
         "no": MessageLookupByLibrary.simpleMessage("否"),
+        "ok": MessageLookupByLibrary.simpleMessage("確定"),
         "priority": MessageLookupByLibrary.simpleMessage("優先權"),
+        "priority_high": MessageLookupByLibrary.simpleMessage("高"),
+        "priority_low": MessageLookupByLibrary.simpleMessage("低"),
+        "priority_med": MessageLookupByLibrary.simpleMessage("中"),
+        "progress": MessageLookupByLibrary.simpleMessage("進度"),
+        "progress_completed": MessageLookupByLibrary.simpleMessage("已完成"),
+        "progress_in_progress": MessageLookupByLibrary.simpleMessage("進行中"),
+        "progress_not_started": MessageLookupByLibrary.simpleMessage("未開始"),
+        "search": MessageLookupByLibrary.simpleMessage("搜尋"),
+        "sort": MessageLookupByLibrary.simpleMessage("排序"),
+        "sort_task": MessageLookupByLibrary.simpleMessage("排序任務"),
+        "tag": MessageLookupByLibrary.simpleMessage("標籤"),
         "title": MessageLookupByLibrary.simpleMessage("標題"),
         "todo_list": MessageLookupByLibrary.simpleMessage("待辦事項"),
         "yes": MessageLookupByLibrary.simpleMessage("是")

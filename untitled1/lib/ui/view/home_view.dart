@@ -10,6 +10,7 @@ import '../../generated/l10n.dart';
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print("====================homeview build");
     return BaseView(
       builder: (context, model, child) {
         return Scaffold(
@@ -44,24 +45,73 @@ class HomeView extends StatelessWidget {
                     return ListView.builder(
                       itemCount: model.globalViewModel.showTasks.value.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                          decoration: BoxDecoration(
-                            color: Colors.black12,
-                            borderRadius: BorderRadius.circular(12), // 设置圆角
-                          ),
-                          child: ListTile(
-                            title: Text(model.globalViewModel.showTasks.value[index].title,),
-                            subtitle: Text(model.globalViewModel.showTasks.value[index].description),
-                            onLongPress: () {
-                              model.deleteTask(context, model.globalViewModel.showTasks.value[index].id);
-                            },
+                        // 任務項目
+                        return InkWell(
+                          onTap: () {
+                            model.editTask(context, model.globalViewModel.showTasks.value[index]);
+                          },
+                          onLongPress: () {
+                            model.deleteTask(context, model.globalViewModel.showTasks.value[index].id);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.black12,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    // 進度
+                                    Expanded(
+                                      child: Text(model.getProgressFromValue(model.globalViewModel.showTasks.value[index].progress)),
+                                    ),
+                                    // 截止日期
+                                    Text(model.globalViewModel.showTasks.value[index].dueDay)
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    // 標題
+                                    Expanded(
+                                      child: Text(
+                                        model.globalViewModel.showTasks.value[index].title,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    // 優先權
+                                    Text(S.current.priority + ":" + model.getPriorityFromValue(model.globalViewModel.showTasks.value[index].priority))
+                                  ],
+                                ),
+                                // 描述
+                                Text(model.globalViewModel.showTasks.value[index].description),
+                              ],
+                            ),
                           ),
                         );
                       },
                     );
                   },
               ),
+              // 排序任務按鈕
+              Container(
+                alignment: Alignment.bottomLeft,
+                margin: EdgeInsets.all(30),
+                child: FloatingActionButton.extended(
+                  onPressed: () {
+                    model.sortTask(context);
+                  },
+                  label: Text(S.current.sort),
+                  icon: Icon(Icons.filter_list_alt),
+                ),
+              ),
+              // 新增任務按鈕
               Container(
                 alignment: Alignment.bottomRight,
                 margin: EdgeInsets.all(30),

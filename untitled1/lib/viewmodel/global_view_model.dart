@@ -27,7 +27,7 @@ class GlobalViewModel extends ChangeNotifier {
       if (snapshot.exists) {
         Map<dynamic, dynamic> users = snapshot.value as Map<dynamic, dynamic>;
         users.forEach((key, value) {
-          tasks.add(Task(id: key, title: value['title'], description: value['description']));
+          tasks.add(Task(id: key, title: value['title'], description: value['description'], priority: value['priority'], progress: value['progress'], dueDay: value['dueDay']));
         });
         setTotalTask(tasks);
         setShowTask(tasks);
@@ -48,4 +48,60 @@ class GlobalViewModel extends ChangeNotifier {
   void setShowTask(List<Task> showTasks) {
     this._showTasks.value = showTasks;
   }
+
+  // 依照截止日期排序
+  List<Task> sortTasksByDueDay(List<Task> tasks) {
+    tasks.sort((a, b) {
+      DateTime dateA = DateTime.parse(a.dueDay);
+      DateTime dateB = DateTime.parse(b.dueDay);
+      return dateA.compareTo(dateB);
+    });
+    return tasks;
+  }
+
+  // 依照優先權排序
+  List<Task> sortTasksByPriority(List<Task> tasks) {
+    tasks.sort((a, b) {
+      int priorityA = int.parse(a.priority);
+      int priorityB = int.parse(b.priority);
+      return priorityB.compareTo(priorityA);
+    });
+    return tasks;
+  }
+
+  // 根據進度篩選
+  List<Task> filterTasksByProgress(List<Task> tasks, String progress) {
+    return tasks.where((task) => task.progress == progress).toList();
+  }
+
+  // 依照搜尋
+  List<Task> filterTasksByQuery(List<Task> tasks, String query) {
+    return tasks.where((task) =>
+    task.title.contains(query) || task.description.contains(query)
+    ).toList();
+  }
+
+  // Firebase 更新任務
+  Future<void> updateTask(String taskId, String newTitle, String newDescription, String newPriority, String newProgress, String newDueDay) async {
+    try {
+      final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref('accounts');
+      await _databaseReference.child(user!.id).child('tasks').child(taskId).update({
+        'title': newTitle,
+        'description': newDescription,
+        'priority': newPriority,
+        'progress': newProgress,
+        'dueDay': newDueDay
+      }).then((_) {
+        print('成功更新任務');
+        // 更新全局 Task
+        updateTotalTask();
+        setShowTask(totalTasks);
+      }).catchError((error) {
+        print('更新任務失敗: $error');
+      });
+    } catch (error) {
+      print('Failed to update data: $error');
+    }
+  }
+
 }
