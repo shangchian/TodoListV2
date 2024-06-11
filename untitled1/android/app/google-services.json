@@ -1,14 +1,13 @@
 {
   "project_info": {
-    "project_number": "742401111655",
-    "firebase_url": "https://todolist-b1783-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "todolist-b1783",
-    "storage_bucket": "todolist-b1783.appspot.com"
+    "project_number": "704139293800",
+    "project_id": "todolist-425914",
+    "storage_bucket": "todolist-425914.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:742401111655:android:6305a0f523134208dd86c2",
+        "mobilesdk_app_id": "1:704139293800:android:7265cd0871e6d1c434f7dd",
         "android_client_info": {
           "package_name": "com.example.untitled1"
         }
@@ -16,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC9HI24WCmiNivP_-CLZuQ_sg9RvBBmi3s"
+          "current_key": "AIzaSyBRMikW0sxtnNk2tLESxYl_f_b8T6j2jLg"
         }
       ],
       "services": {
