@@ -104,6 +104,7 @@ class HomeView extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 margin: EdgeInsets.all(30),
                 child: FloatingActionButton.extended(
+                  heroTag: 'sortButton',
                   onPressed: () {
                     model.sortTask(context);
                   },
@@ -116,6 +117,7 @@ class HomeView extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 margin: EdgeInsets.all(30),
                 child: FloatingActionButton.extended(
+                  heroTag: 'addButton',
                   onPressed: () {
                     model.addTask(context);
                   },
