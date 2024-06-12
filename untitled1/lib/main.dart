@@ -80,6 +80,17 @@ class MyApp extends StatelessWidget {
       },
 
       routerConfig: _appRouter.config(),
+
+      // 支援明暗主題
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+      ),
+      themeMode: ThemeMode.system, // 根據系統設置自動切換主題
     );
   }
 }
