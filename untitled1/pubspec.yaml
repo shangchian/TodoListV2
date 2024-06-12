@@ -49,6 +49,9 @@ dependencies:
   googleapis: ^9.0.0
   googleapis_auth: ^1.2.0
   logging_flutter: ^3.0.0
+  flutter_local_notifications: ^17.1.2
+  timezone: ^0.9.3
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   auto_route_generator: ^8.0.0

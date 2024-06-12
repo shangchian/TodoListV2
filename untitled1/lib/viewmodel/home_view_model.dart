@@ -1,16 +1,22 @@
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled1/core/service/google_signin_service.dart';
 import 'package:untitled1/router/app_router.gr.dart';
 import 'package:untitled1/viewmodel/base_view_model.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 import '../core/model/task.dart';
 import '../generated/l10n.dart';
+import '../main.dart';
 
 class HomeViewModel extends BaseViewModel {
   final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref('accounts');
@@ -152,7 +158,7 @@ class HomeViewModel extends BaseViewModel {
                         ),
                         // 依照搜尋
                         ListTile(
-                          title: selectedSortWay.value == "3" ? null : Text(S.current.search),
+                          title: Text(S.current.search),
                           leading: Radio<String>(
                             value: "3",
                             groupValue: selectedSortWay.value,
@@ -161,14 +167,17 @@ class HomeViewModel extends BaseViewModel {
                               selectedSortWay.value = value as String;
                             },
                           ),
-                          trailing: selectedSortWay.value == "3" ? Container(
-                            child: Container(
+                        ),
+                        if(selectedSortWay.value == "3")...[
+                          // Widget 的條件語法 if()...[] else..[]
+                          Container(
                               margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                               child: SizedBox(
                                 width: 200,
                                 child: Material(
-                                  child: TextField(
+                                  child:
+                                  TextField(
                                     controller: searchTextEditingController,
                                     style: const TextStyle(fontSize: null, fontWeight: null, color: null),
                                     decoration: InputDecoration(
@@ -195,9 +204,8 @@ class HomeViewModel extends BaseViewModel {
                                   ),
                                 ),
                               ),
-                            ),
-                          ) : null,
-                        ),
+                          ),
+                        ],
                       ],
                     );
                   },
@@ -461,8 +469,10 @@ class HomeViewModel extends BaseViewModel {
               ),
               TextButton(
                 onPressed: () {
-                  _writeTaskToFirebase();
-                  AutoRouter.of(context).pop();
+                  if(isTitleTextEditEmpty(context)) {
+                    _writeTaskToFirebase();
+                    AutoRouter.of(context).pop();
+                  }
                 },
                 child: Text(S.current.finish),
               ),
@@ -470,6 +480,22 @@ class HomeViewModel extends BaseViewModel {
           );
         },
     );
+  }
+
+  // 檢查必填欄位
+  bool isTitleTextEditEmpty(BuildContext context) {
+    if (titleTextEditingController.text.isEmpty) {
+      // 顯示錯誤訊息
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Title is required'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return false;
+    }
+
+    return true;
   }
 
   // 編輯任務
@@ -712,7 +738,15 @@ class HomeViewModel extends BaseViewModel {
   // Firebase 新增任務
   void _writeTaskToFirebase() async{
     try {
-      await _databaseReference.child(globalViewModel.user!.id).child('tasks').child(DateTime.now().microsecondsSinceEpoch.toString()).set({
+      var random = Random();
+      var currentTime = DateTime.now().millisecondsSinceEpoch;
+      var randomNumber = random.nextInt(1 << 30); // 生成0到2^30-1之間的正整數
+      var id = (currentTime & 0x3FFFFFFF) ^ randomNumber; // 確保結果在 31 位範圍內
+      // 確保生成的數字是正整數並在範圍內
+      String taskId = (id & 0x7FFFFFFF).toString(); // 取 31 位數字
+      print('Function: _writeTaskToFirebase, taskId = $taskId');
+
+      await _databaseReference.child(globalViewModel.user!.id).child('tasks').child(taskId).set({
         'title': titleTextEditingController.text,
         'description': descriptionTextEditingController.text,
         'priority': priorityItems[prioritySelected.value].value.toString(),
@@ -720,6 +754,10 @@ class HomeViewModel extends BaseViewModel {
         'dueDay': pickTime.value
       }).then((_) {
         print('成功寫入任務');
+
+        // 設定待辦事項顯示通知訊息的設定
+        // _scheduleNotification(taskId, titleTextEditingController.text, pickTime.value);
+
         // 更新全局 Task
         setBusy(true);
         globalViewModel.updateTotalTask();
@@ -730,6 +768,58 @@ class HomeViewModel extends BaseViewModel {
       });
     } catch (error) {
       print('Failed to retrieve data: $error');
+    }
+  }
+
+  // 排程通知
+  /*
+     問題：測試 await flutterLocalNotificationsPlugin.show(...) 能顯示通知，
+          但是設定 await flutterLocalNotificationsPlugin.zonedSchedule(...) 卻
+          無法顯示通知，這支 API 就是在控制每個 task 何時要通知。
+   */
+  void _scheduleNotification(String taskId, String taskTitle, String dueDay) async {
+    tz.initializeTimeZones();
+    DateTime dueDate = DateTime.parse(dueDay);
+    // 將截止日期設定為當天的 00:00
+    DateTime scheduledDate = DateTime(dueDate.year, dueDate.month, dueDate.day);
+
+    // 設定通知時間為前一天的 xx:xx
+    // DateTime notificationDate = scheduledDate.subtract(Duration(hours: 10, minutes:0));
+    // 設定通知時間為當前時間的前 x 分鐘
+    DateTime notificationDate = DateTime.now().add(Duration(minutes: 1));
+
+    bool ret = notificationDate.isAfter(DateTime.now());
+    print('Check notificationDate.isAfter(DateTime.now()) status: $ret');
+
+    if (notificationDate.isAfter(DateTime.now())) {
+      var androidDetails = AndroidNotificationDetails(
+        'task_channel', // channel id
+        'Task Notifications', // channel name
+        channelDescription: 'Channel for task notifications', // channel description
+        importance: Importance.max,
+        priority: Priority.high,
+      );
+
+      var generalNotificationDetails = NotificationDetails(android: androidDetails);
+
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        int.parse(taskId), // id
+        'Task Reminder', // title
+        'Your task "$taskTitle" is due soon.', // body
+        tz.TZDateTime.from(notificationDate, tz.local), // scheduled time in local timezone
+        generalNotificationDetails, // notification details
+        androidAllowWhileIdle: true, // whether to show the notification even when the device is idle
+        payload: taskId, // 设置 payload，以便點擊通知時識別任務
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dateAndTime,
+      );
+
+      // 馬上顯示通知
+      // await flutterLocalNotificationsPlugin.show(
+      //     int.parse(taskId),
+      //     taskTitle,
+      //     descriptionTextEditingController.text,
+      //     generalNotificationDetails);
     }
   }
 
@@ -761,15 +851,6 @@ class HomeViewModel extends BaseViewModel {
         );
       },
     );
-    // try {
-    //   _databaseReference.child(globalViewModel.user!.id).child('tasks').child(id).remove().then((_) {
-    //     print('Successfully deleted $id');
-    //   }).catchError((error) {
-    //     print('Failed to delete $id: $error');
-    //   });
-    // } catch (error) {
-    //   print('Failed to retrieve data: $error');
-    // }
   }
 
   // Firebase 刪除任務
