@@ -27,7 +27,7 @@ class GlobalViewModel extends ChangeNotifier {
       if (snapshot.exists) {
         Map<dynamic, dynamic> users = snapshot.value as Map<dynamic, dynamic>;
         users.forEach((key, value) {
-          tasks.add(Task(id: key, title: value['title'], description: value['description'], priority: value['priority'], progress: value['progress'], dueDay: value['dueDay']));
+          tasks.add(Task(id: key, title: value['title'], description: value['description'], category: value['category'], priority: value['priority'], progress: value['progress'], dueDay: value['dueDay']));
         });
         setTotalTask(tasks);
         setShowTask(tasks);
@@ -39,7 +39,7 @@ class GlobalViewModel extends ChangeNotifier {
         print('===================');
       }
     } catch (error) {
-      print('Failed to retrieve data: $error');
+      print('Function: updateTotalTask(), Failed to retrieve data: $error');
     }
   }
 
@@ -82,12 +82,13 @@ class GlobalViewModel extends ChangeNotifier {
   }
 
   // Firebase 更新任務
-  Future<void> updateTask(String taskId, String newTitle, String newDescription, String newPriority, String newProgress, String newDueDay) async {
+  Future<void> updateTask(String taskId, String newTitle, String newDescription, String newCategory, String newPriority, String newProgress, String newDueDay) async {
     try {
       final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref('accounts');
       await _databaseReference.child(user!.id).child('tasks').child(taskId).update({
         'title': newTitle,
         'description': newDescription,
+        'category': newCategory,
         'priority': newPriority,
         'progress': newProgress,
         'dueDay': newDueDay

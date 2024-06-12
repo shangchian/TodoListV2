@@ -25,6 +25,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "add_task": MessageLookupByLibrary.simpleMessage("Add Task"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "category": MessageLookupByLibrary.simpleMessage("category"),
+        "category_personal": MessageLookupByLibrary.simpleMessage("personal"),
+        "category_work": MessageLookupByLibrary.simpleMessage("work"),
         "delete_task_dialog_description":
             MessageLookupByLibrary.simpleMessage("Whether to delete the task?"),
         "delete_task_dialog_title":

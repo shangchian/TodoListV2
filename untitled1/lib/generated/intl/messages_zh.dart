@@ -25,6 +25,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("新增"),
         "add_task": MessageLookupByLibrary.simpleMessage("新增任務"),
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
+        "category": MessageLookupByLibrary.simpleMessage("分類"),
+        "category_personal": MessageLookupByLibrary.simpleMessage("個人"),
+        "category_work": MessageLookupByLibrary.simpleMessage("工作"),
         "delete_task_dialog_description":
             MessageLookupByLibrary.simpleMessage("是否刪除任務"),
         "delete_task_dialog_title":

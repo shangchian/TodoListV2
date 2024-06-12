@@ -72,7 +72,7 @@ class LoginViewModel extends BaseViewModel {
         print('No data available.');
       }
     } catch (error) {
-      print('Failed to retrieve data: $error');
+      print('Function: _writeData, Failed to retrieve data: $error');
     }
   }
 

@@ -319,6 +319,36 @@ class S {
       args: [],
     );
   }
+
+  /// `category`
+  String get category {
+    return Intl.message(
+      'category',
+      name: 'category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `personal`
+  String get category_personal {
+    return Intl.message(
+      'personal',
+      name: 'category_personal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `work`
+  String get category_work {
+    return Intl.message(
+      'work',
+      name: 'category_work',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -23,6 +23,7 @@ class HomeViewModel extends BaseViewModel {
   TextEditingController titleTextEditingController = TextEditingController();
   TextEditingController descriptionTextEditingController = TextEditingController();
   TextEditingController searchTextEditingController = TextEditingController();
+  ValueNotifier<int> categorySelected = ValueNotifier(0);
   ValueNotifier<int> prioritySelected = ValueNotifier(0);
   ValueNotifier<int> progressSelected = ValueNotifier(0);
   ValueNotifier<String> pickTime = ValueNotifier("");
@@ -30,6 +31,12 @@ class HomeViewModel extends BaseViewModel {
   DateFormat formatter = DateFormat('yyyy-MM-dd');
   ValueNotifier<String> selectedSortWay = ValueNotifier("0");
   ValueNotifier<bool> okButtonClickable = ValueNotifier(true);
+
+  // 建立分類選項
+  List<DropdownMenuItem> categoryItems = <DropdownMenuItem<int>>[
+    DropdownMenuItem(child: Text(S.current.category_personal), value: 0,),
+    DropdownMenuItem(child: Text(S.current.category_work), value: 1,),
+  ];
 
   // 建立優先權選項
   List<DropdownMenuItem> priorityItems = <DropdownMenuItem<int>>[
@@ -360,6 +367,39 @@ class HomeViewModel extends BaseViewModel {
                         ),
                       ),
                     ),
+                    // 分類
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      // 設置選單寬、高
+                      // width: 200,
+                      // height: 50,
+
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              child: Container(
+                                child: Text(S.current.category, style: TextStyle(fontSize: 20),),
+                                margin: EdgeInsets.fromLTRB(10, 10, 15, 10),
+                              )
+                          ),
+                          ValueListenableBuilder(
+                            valueListenable: categorySelected,
+                            builder: (context, value, child) {
+                              return DropdownButton(
+                                value: categorySelected.value, // 設置當前選中的選項
+                                items: categoryItems,  // 從 viewmodel 取得 item 資料
+                                // 當選項被選擇時觸發
+                                onChanged: (value) {
+                                  categorySelected.value = value;
+                                },
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                    ),
                     // 優先權
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -506,6 +546,9 @@ class HomeViewModel extends BaseViewModel {
     descriptionTextEditingController = TextEditingController();
     descriptionTextEditingController.text = task.description;
 
+    categorySelected = ValueNotifier(0);
+    categorySelected.value = int.parse(task.category) as int;
+
     prioritySelected = ValueNotifier(0);
     prioritySelected.value = int.parse(task.priority) as int;
 
@@ -604,6 +647,39 @@ class HomeViewModel extends BaseViewModel {
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                  // 分類
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    // 設置選單寬、高
+                    // width: 200,
+                    // height: 50,
+
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                            child: Container(
+                              child: Text(S.current.category, style: TextStyle(fontSize: 20),),
+                              margin: EdgeInsets.fromLTRB(10, 10, 15, 10),
+                            )
+                        ),
+                        ValueListenableBuilder(
+                          valueListenable: categorySelected,
+                          builder: (context, value, child) {
+                            return DropdownButton(
+                              value: categorySelected.value, // 設置當前選中的選項
+                              items: categoryItems,  // 從 viewmodel 取得 item 資料
+                              // 當選項被選擇時觸發
+                              onChanged: (value) {
+                                categorySelected.value = value;
+                              },
+                            );
+                          },
+                        )
+                      ],
                     ),
                   ),
                   // 優先權
@@ -720,6 +796,7 @@ class HomeViewModel extends BaseViewModel {
                     task.id,
                     titleTextEditingController.text,
                     descriptionTextEditingController.text,
+                    categoryItems[categorySelected.value].value.toString(),
                     priorityItems[prioritySelected.value].value.toString(),
                     progressItems[progressSelected.value].value.toString(),
                     pickTime.value
@@ -749,6 +826,7 @@ class HomeViewModel extends BaseViewModel {
       await _databaseReference.child(globalViewModel.user!.id).child('tasks').child(taskId).set({
         'title': titleTextEditingController.text,
         'description': descriptionTextEditingController.text,
+        'category': categoryItems[categorySelected.value].value.toString(),
         'priority': priorityItems[prioritySelected.value].value.toString(),
         'progress': progressItems[progressSelected.value].value.toString(),
         'dueDay': pickTime.value
@@ -767,7 +845,7 @@ class HomeViewModel extends BaseViewModel {
         print('寫入任務失敗: $error');
       });
     } catch (error) {
-      print('Failed to retrieve data: $error');
+      print('Function: _writeTaskToFirebase, Failed to retrieve data: $error');
     }
   }
 
@@ -872,7 +950,7 @@ class HomeViewModel extends BaseViewModel {
         print('Failed to delete $id: $error');
       });
     } catch (error) {
-      print('Failed to retrieve data: $error');
+      print('Function: _deleteTaskFromFirebase, Failed to retrieve data: $error');
     }
   }
 

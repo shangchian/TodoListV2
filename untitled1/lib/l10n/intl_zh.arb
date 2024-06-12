@@ -26,5 +26,8 @@
   "sort_task": "排序任務",
   "ok": "確定",
   "tag": "標籤",
-  "search": "搜尋"
+  "search": "搜尋",
+  "category": "分類",
+  "category_personal": "個人",
+  "category_work": "工作"
 }

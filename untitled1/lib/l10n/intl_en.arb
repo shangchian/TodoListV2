@@ -26,5 +26,8 @@
   "sort_task": "Sort Task",
   "ok": "Ok",
   "tag": "Tags",
-  "search": "Search"
+  "search": "Search",
+  "category": "category",
+  "category_personal": "personal",
+  "category_work": "work"
 }
