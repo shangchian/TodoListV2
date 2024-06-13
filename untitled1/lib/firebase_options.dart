@@ -54,17 +54,19 @@ class DefaultFirebaseOptions {
     appId: '1:704139293800:android:7265cd0871e6d1c434f7dd',
     messagingSenderId: '704139293800',
     projectId: 'todolist-425914',
+    databaseURL: 'https://todolist-425914-default-rtdb.firebaseio.com',
     storageBucket: 'todolist-425914.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCrNNoOIdpAM4q-Dtw04TZYLqFow6QdG0A',
-    appId: '1:704139293800:ios:1e59fbcf2f6b5ec034f7dd',
+    appId: '1:704139293800:ios:246071495ecd7b4734f7dd',
     messagingSenderId: '704139293800',
     projectId: 'todolist-425914',
+    databaseURL: 'https://todolist-425914-default-rtdb.firebaseio.com',
     storageBucket: 'todolist-425914.appspot.com',
     androidClientId: '704139293800-csk48e7k9c90q8oo0otnmlgfkd86ck05.apps.googleusercontent.com',
-    iosBundleId: 'com.example.untitled1',
+    iosBundleId: 'com.shangchianliu.todilist',
   );
 
 }

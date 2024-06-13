@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,9 +50,11 @@ void main() async{
   );
 
   // 請求精確鬧鐘權限
-  bool granted = await requestScheduleExactAlarmPermission();
-  if (!granted) {
-    print("Exact alarm permission not granted.");
+  if (Platform.isAndroid) {
+    bool granted = await requestScheduleExactAlarmPermission();
+    if (!granted) {
+      print("Exact alarm permission not granted.");
+    }
   }
   // endregion 本地通知初始化設定，套件：flutter_local_notifications
 
