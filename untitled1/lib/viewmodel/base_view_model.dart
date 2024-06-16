@@ -21,13 +21,13 @@ class BaseViewModel extends ChangeNotifier {
 
   @override
   void dispose(){
+    _disposed = true; // 確保 _disposed 在 super.dispose() 之前設置
     super.dispose();
-    _disposed = true;
   }
 
   @override
   void notifyListeners(){
-    if(!disposed) super.notifyListeners();
+    if(!_disposed) super.notifyListeners();
   }
 
   void setBusy(bool value) {
@@ -36,8 +36,9 @@ class BaseViewModel extends ChangeNotifier {
   }
 
   void initViewModel(BuildContext context) {
-    setBusy(true);
+    // 移除了 setBusy 調用，簡化了方法
+    // setBusy(true);
     _context = context;
-    setBusy(false);
+    // setBusy(false);
   }
 }
