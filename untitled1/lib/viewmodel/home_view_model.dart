@@ -857,6 +857,7 @@ class HomeViewModel extends BaseViewModel {
    */
   void _scheduleNotification(String taskId, String taskTitle, String dueDay) async {
     tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('Asia/Taipei')); // 設置本地時區
     DateTime dueDate = DateTime.parse(dueDay);
     // 將截止日期設定為當天的 00:00
     DateTime scheduledDate = DateTime(dueDate.year, dueDate.month, dueDate.day);
@@ -865,6 +866,7 @@ class HomeViewModel extends BaseViewModel {
     // DateTime notificationDate = scheduledDate.subtract(Duration(hours: 10, minutes:0));
     // 設定通知時間為當前時間的前 x 分鐘
     DateTime notificationDate = DateTime.now().add(Duration(minutes: 1));
+    print('Notification Date: $notificationDate'); // 輸出通知時間以檢查
 
     bool ret = notificationDate.isAfter(DateTime.now());
     print('Check notificationDate.isAfter(DateTime.now()) status: $ret');
@@ -880,17 +882,21 @@ class HomeViewModel extends BaseViewModel {
 
       var generalNotificationDetails = NotificationDetails(android: androidDetails);
 
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-        int.parse(taskId), // id
-        'Task Reminder', // title
-        'Your task "$taskTitle" is due soon.', // body
-        tz.TZDateTime.from(notificationDate, tz.local), // scheduled time in local timezone
-        generalNotificationDetails, // notification details
-        androidAllowWhileIdle: true, // whether to show the notification even when the device is idle
-        payload: taskId, // 设置 payload，以便點擊通知時識別任務
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.dateAndTime,
-      );
+      try {
+        await flutterLocalNotificationsPlugin.zonedSchedule(
+          int.parse(taskId), // id
+          'Task Reminder', // title
+          'Your task "$taskTitle" is due soon.', // body
+          tz.TZDateTime.from(notificationDate, tz.local), // scheduled time in local timezone
+          generalNotificationDetails, // notification details
+          androidAllowWhileIdle: true, // whether to show the notification even when the device is idle
+          payload: taskId, // 设置 payload，以便點擊通知時識別任務
+          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+          matchDateTimeComponents: DateTimeComponents.dateAndTime,
+        );
+      } catch (e) {
+        print('Error scheduling notification: $e');
+      }
 
       // 馬上顯示通知
       // await flutterLocalNotificationsPlugin.show(
