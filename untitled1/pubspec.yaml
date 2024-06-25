@@ -18,6 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
 
+# 3.4.3 <= Dart SDK < 4.0.0
 environment:
   sdk: '>=3.4.3 <4.0.0'
 
@@ -36,8 +37,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   auto_route: ^8.1.3
-  get_it: ^7.7.0
-  provider: ^6.1.2
+  get_it: ^7.7.0              # Dependency Injection Tool
+  provider: ^6.1.2            # State Management Tool
   intl: ^0.19.0
   intl_utils: ^2.8.7
   flutter_localizations:
@@ -53,7 +54,9 @@ dependencies:
   timezone: ^0.9.3
   permission_handler: ^11.3.1
   firebase_auth: ^5.1.0
+  flutter_lints: ^4.0.0       # 提供預定義的代碼規範和規則，以幫助開發者编寫一致且高質量的代碼。
 
+# 開發過程中所需的工具和套件，但在應用程式運行時並不需要。這些依賴通常用於開發輔助、測試、生成代碼等。
 dev_dependencies:
   auto_route_generator: ^8.0.0
   build_runner:
@@ -65,12 +68,19 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+
+
+# 為什麼需要區分 dependencies: 與 dev_dependencies: 這兩者？
+#   1. 優化應用大小: dev_dependencies 中的套件不會包含在最終的發佈包中，這樣可以減少應用的大小。
+#   2. 清晰管理: 幫助開發者明確哪些依賴是運行時必須的，哪些只是開發過程中的輔助工具。
+#   3. 依賴隔離: 確保開發工具不會意外地影響到應用程式的運行環境。
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+# 這個設置告訴 Flutter 應用程序將使用 Material Design 樣式，讓你使用 Flutter 提供的 Material Design 圖標和其他設計元素。
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -79,6 +89,7 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
+  # 這個設置用來指定應用程序中使用的資產（如圖像、音頻文件等）的路徑。資產是應用程序中靜態的資源，將它們包含在這個列表中可以讓 Flutter 在打包時包含這些資源。
   assets:
     - assets/image/
   #   - images/a_dot_burr.jpeg
@@ -109,5 +120,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+# Flutter Intl 用於國際化（i18n）的插件，可以將應用程序翻譯成不同的語言。
 flutter_intl:
   enabled: true

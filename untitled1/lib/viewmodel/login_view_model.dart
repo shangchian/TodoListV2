@@ -8,8 +8,6 @@ import 'package:untitled1/core/service/google_signin_service.dart';
 import 'package:untitled1/router/app_router.gr.dart';
 import 'package:untitled1/viewmodel/base_view_model.dart';
 
-import '../core/model/task.dart';
-import '../locator.dart';
 
 class LoginViewModel extends BaseViewModel {
   final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref('accounts');
